@@ -11,7 +11,7 @@ export default function Home({theme}) {
     <div>
       <Jumbotron theme={theme} />
 
-      <div className="container">
+      <div className={`row ${theme.bgColor}`}>
         <div className="row mt-5 justify-content-center text-center">
           {LIBRARY_DB.map(item => (
             <Card
