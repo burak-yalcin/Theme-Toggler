@@ -1,31 +1,49 @@
-import React from "react";
+import React, {useState} from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import Navbar from "./components/Navbar";
-import Jumbotron from "./components/Jumbotron";
-import Card from "./components/Card";
 import Footer from "./components/Footer";
-import LIBRARY_DB from "./data/LIBRARY_DB";
+
+import Home from "./pages/Home";
+import Contact from "./pages/Contact";
+
+
+
+import { greenTheme, whiteTheme } from "./theme.js";
 
 export default function App() {
+
+const [theme, setTheme] = useState(greenTheme)
+
+function toggleTheme() {
+    setTheme(theme.name === "green" ? whiteTheme : greenTheme);
+    console.log(theme)
+  }
+
   return (
-    <div>
-      <Navbar />
-      <Jumbotron />
+ <Router>
+       <Navbar />
+       <a onClick={toggleTheme} className="btn bg-white text-success btn-lg" href="#" role="button">
+        Change Theme
+      </a>  
 
-      <div className="container">
-        <div className="row mt-5 justify-content-center text-center">
-          {LIBRARY_DB.map(item => (
-            <Card
-              title={item.title}
-              content={item.content}
-              image={item.image}
-            />
-          ))}
-        </div>
-      </div>
+        <Switch>
+         <Route path="/" exact>
+               <Home theme={theme}/>
 
+          </Route>
+              <Route path="/contact" exact>
+               <Contact theme={theme}/>
+
+          </Route>
+
+
+  </Switch>
       <Footer />
-    </div>
+ </Router> 
+ 
+ 
   );
 }
